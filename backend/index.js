@@ -14,10 +14,10 @@ const app = express();
 // ✅ CORS Configuration (slash hataya, OPTIONS add kiya)
 app.use(cors({
     origin: [
-        "http://localhost:5173", // Local development
-        "https://notes-app-frontend-tawny.vercel.app" // Live frontend
+        "http://localhost:5173", // local dev
+        "https://notes-app-frontend-tawny.vercel.app" // live frontend
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
 
