@@ -15,7 +15,7 @@ const app = express();
 app.use(cors({
     origin: [
         "http://localhost:5173", // local dev
-        "https://notes-app-frontend-tawny.vercel.app" // live frontend
+        "https://notes-api-frontend-two.vercel.app/" // live frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
