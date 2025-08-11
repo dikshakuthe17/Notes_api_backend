@@ -10,10 +10,13 @@ const notesRoutes = require('./routes/notes');
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: [
+        "http://localhost:5173", // local dev
+        "https://notes-app-frontend-tawny.vercel.app/" // live frontend
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
-
 app.use(express.json());
 
 // Connect DB
