@@ -1,28 +1,34 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const cors = require('cors');
-
-dotenv.config();
-
-// Routes import
-const authRoutes = require('./routes/auth');
-const notesRoutes = require('./routes/notes');
-
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
-// ✅ CORS Configuration (slash hataya, OPTIONS add kiya)
+// Allowlist me tumhare frontend ke URLs
+const allowedOrigins = [
+    "http://localhost:3000", // local dev
+    "https://notes-app-frontend-tawny.vercel.app" // production
+];
+
+// Dynamic CORS config
 app.use(cors({
-    origin: [
-        "http://localhost:5173", // Local development
-        "https://notes-app-frontend-tawny.vercel.app" // Live frontend
-    ],
+    origin: function (origin, callback) {
+        // Agar origin allowed hai ya request Postman se hai (no origin)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true
 }));
 
-// ✅ Middleware
+// JSON parsing
 app.use(express.json());
+
+// Example route
+app.get("/", (req, res) => {
+    res.send("API is running...");
+});
 
 // ✅ Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_ATLAS_URI)
@@ -33,10 +39,7 @@ mongoose.connect(process.env.MONGO_ATLAS_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', notesRoutes);
 
-// ✅ Default Route
-app.get("/", (req, res) => {
-    res.send("Notes API is running...");
-});
+
 
 // ✅ Start Server (for local dev)
 const PORT = process.env.PORT || 3000;
