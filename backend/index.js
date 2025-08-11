@@ -12,11 +12,13 @@ const app = express();
 app.use(cors({
     origin: [
         "http://localhost:5173", // local dev
-        "https://notes-app-frontend-tawny.vercel.app/" // live frontend
+        "https://notes-app-frontend-tawny.vercel.app" // live frontend (slash hataya)
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // OPTIONS added
     credentials: true
 }));
+
+
 app.use(express.json());
 
 // Connect DB
