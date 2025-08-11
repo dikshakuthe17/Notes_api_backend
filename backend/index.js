@@ -26,6 +26,11 @@ mongoose.connect(process.env.MONGO_ATLAS_URI).then(() => console.log('MongoDB co
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', notesRoutes);
 
+app.get("/", (req, res) => {
+    res.send("Notes API is running...");
+});
+
+
 // Start server
 app.listen(3000, () => {
     console.log('Server running on 3000');
